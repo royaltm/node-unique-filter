@@ -9,7 +9,7 @@ It utilizes [bloomfilter](https://www.npmjs.com/package/bloomfilter) so it perfo
 
 UniqueFilter keeps the hash index and bloom filter buckets in memory and both sizes can be adjusted.
 
-The actual unique set values are written to the temporary file.
+The actual unique values are written to the temporary file.
 
 
 Install
@@ -83,7 +83,7 @@ var probability = 0.01
 
 var options = UniqueFilter.getOptimalOptions(iterations, probability)
 
-console.log('will used max: %s bytes', UniqueFilter.maxByteUsage(options))
+console.log('will use max: %s bytes', UniqueFilter.maxByteUsage(options))
 
 var ufilter = new UniqueFilter('/tmp/foo', options)
 ```
