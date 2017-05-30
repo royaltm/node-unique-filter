@@ -8,6 +8,7 @@ UniqueFilter.setDefaultOptions({hash: murmurHash32});
 
 const iterations = (process.argv[2]|0) || 1000000;
 const probability = +process.argv[3] || 0.01;
+const maxitemsize = (process.argv[4]>>>0) || 100;
 
 const options = UniqueFilter.getOptimalOptions(iterations, probability);
 
@@ -21,7 +22,7 @@ async function test(uf) {
   console.log('hashes: %s', uf.bloom._locations.length);
   var array = [];
   for(var i = iterations; i > 0; --i) {
-    array.push(crypto.randomBytes(Math.random()*100|0).toString('hex'));
+    array.push(crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex'));
   }
   var uset = new Set(array);
   var start = Date.now();
@@ -42,7 +43,7 @@ async function test(uf) {
   var count = 0;
   var array = [];
   for(var i = iterations; i > 0; --i) {
-    array.push(crypto.randomBytes(Math.random()*100|0).toString('hex'));
+    array.push(crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex'));
   }
   var start = Date.now();
   for(item of array) {

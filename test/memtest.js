@@ -34,7 +34,6 @@ async function test(uf) {
   var stop = Date.now();
   console.log("time: %s ms", (stop - start) / iterations);
   console.log("items: %s uf: %s", iterations, uf.size);
-  console.log("file size: %s", uf.index.filesize);
   console.log(process.memoryUsage());
 
   await uf.close();
