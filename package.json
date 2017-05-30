@@ -18,6 +18,9 @@
   },
   "devDependencies": {
     "ben": "0.0.0",
+    "goby": "^1.1.2",
+    "level": "^1.7.0",
+    "level-unique-filter": "0.0.2",
     "murmurhash-native": "^3.2.0",
     "tap": "^10.3.2"
   }
