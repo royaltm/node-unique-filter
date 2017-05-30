@@ -8,6 +8,7 @@ const UniqueFilter = require('..');
 
 const iterations = (process.argv[2]|0) || 1000000;
 const probability = +process.argv[3] || 0.01;
+const maxitemsize = (process.argv[4]>>>0) || 100;
 
 UniqueFilter.prototype.hash = murmurHash32;
 
@@ -29,7 +30,7 @@ async function test(uf) {
 
   var start = Date.now();
   for(var i = iterations; i > 0; --i) {
-    await uf.add(crypto.randomBytes(Math.random()*100|0).toString('hex'));
+    await uf.add(crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex'));
   }
   var stop = Date.now();
   console.log("time: %s ms", (stop - start) / iterations);
@@ -44,7 +45,7 @@ async function test(uf) {
   var uset = new Set();
   var start = Date.now();
   for(var i = iterations; i > 0; --i) {
-    uset.add(crypto.randomBytes(Math.random()*100|0).toString('hex'));
+    uset.add(crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex'));
   }
   var stop = Date.now();
   console.log("time: %s ms", (stop - start) / iterations);
