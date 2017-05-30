@@ -1,0 +1,24 @@
+{
+  "name": "unique-filter",
+  "version": "0.0.1",
+  "description": "file based unique set with predictable maximum memory usage",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/test.*.js -T"
+  },
+  "engine-strict": true,
+  "engines": {
+    "node": ">=6"
+  },
+  "author": "royal@yeondir.com",
+  "license": "LGPL-3.0",
+  "dependencies": {
+    "bloomfilter": "0.0.16",
+    "debug": "^2.6.7"
+  },
+  "devDependencies": {
+    "ben": "0.0.0",
+    "murmurhash-native": "^3.2.0",
+    "tap": "^10.3.2"
+  }
+}
