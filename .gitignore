@@ -9,6 +9,8 @@ Thumbs.db
 *.sublime-workspace
 sftp-config.json
 /node_modules
+npm-debug.log*
+package-lock.json
 *.o
 *.so
 .nyc_output
