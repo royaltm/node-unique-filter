@@ -2,14 +2,20 @@ const assert = require('assert');
 const crypto = require('crypto');
 const UniqueFilter = require('..');
 
+const goby = require('goby').init();
+const GOBY_ARGS = ['pre', 'suf'];
+
 const { murmurHash32 } = require('murmurhash-native');
 
 UniqueFilter.setDefaultOptions({hash: murmurHash32});
 
 const iterations = (process.argv[2]|0) || 1000000;
 const probability = +process.argv[3] || 0.01;
-const maxitemsize = (process.argv[4]>>>0) || 100;
+const maxitemsize = (process.argv[4]>>>0);
 const lru = (process.argv[5]>>>0) || 0;
+
+const genItem = maxitemsize ? () => crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex')
+                            : () => goby.generate(GOBY_ARGS);
 
 const options = UniqueFilter.getOptimalOptions(iterations, probability);
 options.lru = lru;
@@ -26,7 +32,7 @@ async function test(uf) {
   console.log('hashes: %s', uf.bloom._locations.length);
   var array = [];
   for(var i = iterations; i > 0; --i) {
-    array.push(crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex'));
+    array.push(genItem());
   }
   var uset = new Set(array);
   var start = Date.now();
@@ -49,7 +55,7 @@ async function test(uf) {
   var count = 0;
   var array = [];
   for(var i = iterations; i > 0; --i) {
-    array.push(crypto.randomBytes(Math.random()*maxitemsize|0).toString('hex'));
+    array.push(genItem());
   }
   var start = Date.now();
   for(item of array) {
