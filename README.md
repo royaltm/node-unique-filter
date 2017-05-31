@@ -29,10 +29,11 @@ const { murmurHash32 } = require('murmurhash-native');
 const UniqueFilter = require('unique-filter');
 
 var ufilter = new UniqueFilter('/tmp/foo.tmp', {
-  hash: murmurHash32, // the hash function has signature: hash(string) -> UInt32
+  hash: murmurHash32, // the hash function (required) hash(string) -> UInt32
   bloombits: 524288,  // how many bloom filter bits to allocate in the bloom filter (should be a multiple of 32)
   bloomhashes: 7,     // how many bloom hashes to generate bits
   indexbits: 16,      // the size of the hash index 8 - 24
+  lru: 0              // max length for optional disk read LRU cache (0 = disabled)
   deleteFile: true    // if the file should be deleted upon creation (is temporary)
 })
 
@@ -66,10 +67,10 @@ ufilter.close().then(() => console.log('closed'))
 Configuration
 -------------
 
-Memory usage calculations:
+Memory usage calculations (excluding heap occupied by JavaScript data structures):
 
 ```
-the size of bytes allocated = buffer sizes + 4 * 2^indexbits + bloombits / 8 + 2 * bloomhashes
+the size of bytes allocated = buffer sizes + 4 * 2^indexbits + bloombits / 8 + 2 * bloomhashes + 2 * lru size
 buffer sizes = write buffer size + read buffer size
 write buffer size = BufferedBucketWriter.BUFFER_SIZE (65536)
 read buffer size = up to BufferedBucketWriter.MAX_VALUE_LENGTH (65526)
@@ -93,5 +94,5 @@ It is safe to read entries and add new items to UniqueFilter at the same time.
 Providing default hash function:
 
 ```
-UniqueFilter.setDefaultOptions({hash: murmurHash32});
+UniqueFilter.setDefaultOptions({hash: murmurHash32, lru: 131072});
 ```
