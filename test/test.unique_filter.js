@@ -26,9 +26,12 @@ test('UniqueFilter', suite => {
 
   suite.test('maxByteUsage', t => {
     t.strictEquals(UniqueFilter.maxByteUsage({}), 196628);
+    t.strictEquals(UniqueFilter.maxByteUsage({lru: 65536}), 327700);
     t.strictEquals(UniqueFilter.maxByteUsage({indexbits: 24}), 67305488);
+    t.strictEquals(UniqueFilter.maxByteUsage({indexbits: 24, lru: 8192}), 67321872);
     t.strictEquals(UniqueFilter.maxByteUsage({indexbits: 8, bloombits: 65536}), 140304);
     t.strictEquals(UniqueFilter.maxByteUsage({indexbits: 12, bloombits: 16384*32, bloomhashes: 20}), 213034);
+    t.strictEquals(UniqueFilter.maxByteUsage({indexbits: 12, bloombits: 16384*32, bloomhashes: 20, lru: 16384}), 245802);
     t.end();
   });
 

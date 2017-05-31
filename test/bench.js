@@ -9,14 +9,18 @@ UniqueFilter.setDefaultOptions({hash: murmurHash32});
 const iterations = (process.argv[2]|0) || 1000000;
 const probability = +process.argv[3] || 0.01;
 const maxitemsize = (process.argv[4]>>>0) || 100;
+const lru = (process.argv[5]>>>0) || 0;
 
 const options = UniqueFilter.getOptimalOptions(iterations, probability);
+options.lru = lru;
 
 console.log(options);
 
 new UniqueFilter('foobar.tmp', options).ready().then(test).catch(err => console.error(err));
 
 async function test(uf) {
+  console.log('max byte usage: %s', UniqueFilter.maxByteUsage(options));
+  console.log('byte usage: %s', await uf.byteUsage());
   console.log('index: %s: %s bytes', uf.index.index.length, uf.index.index.length * uf.index.index.constructor.BYTES_PER_ELEMENT);
   console.log('buckets: %s: %s bytes', uf.bloom.buckets.length, uf.bloom.buckets.length * uf.bloom.buckets.constructor.BYTES_PER_ELEMENT);
   console.log('hashes: %s', uf.bloom._locations.length);
@@ -32,6 +36,7 @@ async function test(uf) {
   var stop = Date.now();
   console.log("time: %s ms", (stop - start) / array.length);
   console.log("items: %s unique: %s uf: %s", array.length, uset.size, uf.size);
+  console.log('byte usage: %s', await uf.byteUsage());
 
   var start = Date.now();
   for(let item of array) {
@@ -39,6 +44,7 @@ async function test(uf) {
   }
   var stop = Date.now();
   console.log("time: %s ms", (stop - start) / array.length);
+  console.log('byte usage: %s', await uf.byteUsage());
 
   var count = 0;
   var array = [];
@@ -52,4 +58,5 @@ async function test(uf) {
   var stop = Date.now();
   console.log("time: %s ms", (stop - start) / array.length);
   console.log("hits: %s", count);
+  console.log('byte usage: %s', await uf.byteUsage());
 }
