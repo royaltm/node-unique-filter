@@ -35,7 +35,7 @@ const UniqueFilter = require('unique-filter');
 
 var ufilter = new UniqueFilter('/tmp/foo.tmp', {
   hash: murmurHash32, // the hash function (required) hash(string) -> UInt32
-  /* below are the default values *?
+  /* below are the default values */
   bloombits: 524288,  // how many bloom filter bits to allocate in the bloom filter (should be a multiple of 32)
   bloomhashes: 7,     // how many bloom hashes to generate bits
   indexbits: 16,      // the size of the hash index 8 - 24
