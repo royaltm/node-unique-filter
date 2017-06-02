@@ -38,7 +38,7 @@ var ufilter = new UniqueFilter('/tmp/foo.tmp', {
   /* below are the default values */
   bloombits: 524288,  // how many bloom filter bits to allocate in the bloom filter (should be a multiple of 32)
   bloomhashes: 7,     // how many bloom hashes to generate bits
-  indexbits: 16,      // the size of the hash index 8 - 24
+  indexbits: 16,      // the width of the hash index 8 - 24
   lru: 0              // max length for optional disk read LRU cache (0 = disabled)
   deleteFile: true    // if the file should be deleted upon creation (is temporary)
 })
@@ -84,7 +84,7 @@ read buffer size = up to BufferedBucketWriter.MAX_VALUE_LENGTH (65526)
 
 To get optimal options based on predicted size of the set and bloom filter false-positive probability use:
 
-```
+```js
 var iterations = 10000000
 var probability = 0.01
 
@@ -95,10 +95,11 @@ console.log('will use max: %s bytes', UniqueFilter.maxByteUsage(options))
 var ufilter = new UniqueFilter('/tmp/foo', options)
 ```
 
-It is safe to read entries and add new items to UniqueFilter at the same time.
+It is safe to read entries and add new ones to the UniqueFilter asynchronously.
 
-Providing default hash function:
 
-```
+Providing default options:
+
+```js
 UniqueFilter.setDefaultOptions({hash: murmurHash32, lru: 131072});
 ```
