@@ -10,6 +10,17 @@
   "engines": {
     "node": ">=6"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/royaltm/node-unique-filter.git"
+  },
+  "keywords": [
+    "unique filter"
+  ],
+  "bugs": {
+    "url": "https://github.com/royaltm/node-unique-filter/issues"
+  },
+  "homepage": "https://github.com/royaltm/node-unique-filter#readme",
   "author": "royal@yeondir.com",
   "license": "LGPL-3.0",
   "dependencies": {
