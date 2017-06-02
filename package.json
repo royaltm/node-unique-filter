@@ -1,5 +1,5 @@
 {
-  "name": "unique-filter",
+  "name": "@royaltm/unique-filter",
   "version": "0.0.1",
   "description": "filesystem based exact unique filter with predictable maximum memory usage",
   "main": "index.js",
